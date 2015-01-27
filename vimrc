@@ -2,7 +2,7 @@
 let &t_Co=256
 set term=xterm-256color
 set background=dark
-colorscheme solarized
+colorscheme gruvbox
 
 set nocompatible
 filetype off
@@ -12,14 +12,31 @@ call vundle#begin()
 " Plugins. Run :PluginInstall in vim to install them!
 Plugin 'gmarik/Vundle.vim'
 Plugin 'tpope/vim-fugitive'
+Plugin 'tpope/vim-surround'
+Plugin 'tpope/vim-commentary'
 Plugin 'junegunn/goyo.vim'
 Plugin 'mhinz/vim-startify'
 Plugin 'terryma/vim-multiple-cursors'
-Plugin 'tpope/vim-surround'
-Plugin 'tpope/vim-commentary'
 Plugin 'altercation/vim-colors-solarized'
 Plugin 'lervag/vim-latex'
 Plugin 'bling/vim-airline'
+Plugin 'scrooloose/nerdtree'
+Plugin 'pangloss/vim-javascript'
+Plugin 'kien/ctrlp.vim'
+Plugin 'maksimr/vim-jsbeautify'
+Plugin 'jshint/jshint'
+Plugin 'scrooloose/syntastic'
+
+" Startup commands
+" autocmd VimEnter * Goyo
+
+let g:airline_powerline_fonts = 1
+
+
+" Keybinds
+map <F2> :Goyo
+map <F3> :NERDTree
+map <F4> :PluginInstall
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -35,7 +52,8 @@ set expandtab               " Expand TABs to spaces
 set number
 set clipboard=unnamed
 
-
+" vim-airline config
+set laststatus=2
 
 " Change cursor shape between insert and normal mode in iTerm2.app
 if $TERM_PROGRAM =~ "iTerm"
@@ -76,9 +94,5 @@ inoremap <Esc> <Esc>:w<CR>
 :hi NonText guifg=bg
 
 let g:startify_custom_header = [
-            \'   Welcome to Vim!                ',
-            \'    ____ ____ ____ ____ ____ ____ ',
-            \'   ||K |||E |||I |||T |||H |||Y ||',
-            \'   ||__|||__|||__|||__|||__|||__||',
-            \'   |/__\|/__\|/__\|/__\|/__\|/__\|',
+            \'   Welcome to Vim, Keith!',
             \'   ']
