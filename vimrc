@@ -1,23 +1,40 @@
-execute pathogen#infect()
-syntax enable
-set top       " The width of a TAB is set to 4.
-                    " Still it is a \t. It is just that
-                    " Vim will interpret it to be having
-                    " a width of 4.
-
-set shiftwidth=4    " Indents will have a width of 4
-set softtabstop=4   " Sets the number of columns for a TAB
-set expandtab       " Expand TABs to spaces
-set number
-set clipboard=unnamed
-
-
 " Colorscheme
 let &t_Co=256
 set term=xterm-256color
 set background=dark
 colorscheme gruvbox
+
+set nocompatible
+filetype off
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+
+" Plugins. Run :PluginInstall in vim to install them!
+Plugin 'gmarik/Vundle.vim'
+Plugin 'tpope/vim-fugitive'
+Plugin 'junegunn/goyo.vim'
+Plugin 'mhinz/vim-startify'
+Plugin 'terryma/vim-multiple-cursors'
+Plugin 'tpope/vim-surround'
+Plugin 'tpope/vim-commentary'
+Plugin 'altercation/vim-colors-solarized'
+Plugin 'lervag/vim-latex'
+
+" All of your Plugins must be added before the following line
+call vundle#end()            " required
+
 filetype plugin indent on
+
+" Basic stuff
+syntax enable
+set top                     " The width of a TAB is set to 4.
+set shiftwidth=4            " Indents will have a width of 4
+set softtabstop=4           " Sets the number of columns for a TAB
+set expandtab               " Expand TABs to spaces
+set number
+set clipboard=unnamed
+
+
 
 " Change cursor shape between insert and normal mode in iTerm2.app
 if $TERM_PROGRAM =~ "iTerm"
@@ -35,20 +52,14 @@ nmap <S-Enter> O<Esc>
 
 " LaTeX stuff
 
-" REQUIRED. This makes vim invoke Latex-Suite when you open a tex file.
-filetype plugin on
-
 " IMPORTANT: win32 users will need to have 'shellslash' set so that latex
 " can be called correctly.
 set shellslash
-"
+
 " IMPORTANT: grep will sometimes skip displaying the file name if you
 " search in a singe file. This will confuse Latex-Suite. Set your grep
 " program to always generate a file-name.
 set grepprg=grep\ -nH\ $*
-
-" OPTIONAL: This enables automatic indentation as you type.
-filetype indent on
 
 " OPTIONAL: Starting with Vim 7, the filetype of empty .tex files defaults
 " to
