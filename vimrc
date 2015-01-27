@@ -2,7 +2,7 @@
 let &t_Co=256
 set term=xterm-256color
 set background=dark
-colorscheme gruvbox
+colorscheme solarized
 
 set nocompatible
 filetype off
@@ -19,6 +19,7 @@ Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-commentary'
 Plugin 'altercation/vim-colors-solarized'
 Plugin 'lervag/vim-latex'
+Plugin 'bling/vim-airline'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
