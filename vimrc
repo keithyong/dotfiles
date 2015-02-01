@@ -2,7 +2,7 @@
 let &t_Co=256
 set term=xterm-256color
 set background=dark
-colorscheme solarized
+colorscheme gruvbox
 
 " ---- Vundle ---------------------------------------
 set nocompatible
@@ -10,10 +10,11 @@ filetype off
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
-Plugin 'gmarik/Vundle.vim'
 Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-commentary'
+Plugin 'tpope/vim-vinegar'
+Plugin 'gmarik/Vundle.vim'
 Plugin 'junegunn/goyo.vim'
 Plugin 'mhinz/vim-startify'
 Plugin 'terryma/vim-multiple-cursors'
