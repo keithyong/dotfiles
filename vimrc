@@ -1,15 +1,15 @@
-" Colorscheme
+" ---- Color Scheme ---------------------------------
 let &t_Co=256
 set term=xterm-256color
 set background=dark
-colorscheme gruvbox
+colorscheme solarized
 
+" ---- Vundle ---------------------------------------
 set nocompatible
 filetype off
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
-" Plugins. Run :PluginInstall in vim to install them!
 Plugin 'gmarik/Vundle.vim'
 Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-surround'
@@ -23,27 +23,81 @@ Plugin 'bling/vim-airline'
 Plugin 'scrooloose/nerdtree'
 Plugin 'pangloss/vim-javascript'
 Plugin 'kien/ctrlp.vim'
-Plugin 'maksimr/vim-jsbeautify'
 Plugin 'jshint/jshint'
+Plugin 'maksimr/vim-jsbeautify'
 Plugin 'scrooloose/syntastic'
+Plugin 'terryma/vim-expand-region'
+Plugin 'Raimondi/delimitMate'
 
-" Startup commands
-" autocmd VimEnter * Goyo
-
-let g:airline_powerline_fonts = 1
-
-
-" Keybinds
-map <F2> :Goyo
-map <F3> :NERDTree
-map <F4> :PluginInstall
-
-" All of your Plugins must be added before the following line
-call vundle#end()            " required
-
+call vundle#end()
 filetype plugin indent on
 
-" Basic stuff
+" ---- Keybinds -------------------------------------
+" Plugin hotkeys
+map <F2> :Goyo<CR>
+map <F3> :NERDTree<CR>
+map <F4> :call JsBeautify()<CR>
+map <F5> :PluginInstall<CR>
+
+" Leader mappings
+let mapleader = "\<Space>"
+map <Leader>ev :e ~/.vimrc<CR>
+nnoremap <Leader>o :CtrlP<CR>
+nnoremap <Leader>w :w<CR>
+nnoremap <Leader>wq :wq<CR>
+nnoremap <Leader>q :q<CR>
+nnoremap <Leader>g yyp
+nnoremap <Leader>q :q<CR>
+nnoremap <Leader><Leader> :
+nnoremap ;j <Esc>:update<Cr>
+nnoremap <Leader>; <S-a>;<Esc>
+
+" Split movement keybinds
+nnoremap <Leader>h <C-w>h
+nnoremap <Leader>j <C-w>j
+nnoremap <Leader>k <C-w>k
+nnoremap <Leader>l <C-w>l
+nnoremap <Leader>f <C-w>w
+
+inoremap {<CR> {<CR>}<C-o>O
+
+" Insert a new line under without going into insert mod>
+nmap <S-Enter> O<Esc>
+
+" Map v vv vvv -> visual visual-word visual paragraph
+vmap v <Plug>(expand_region_expand)
+vmap <C-v> <Plug>(expand_region_shrink)
+
+" ---- Syntastic ------------------------------------
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+
+let g:syntastic_javascript_checkers = ['jshint']
+" ---- Airline --------------------------------------
+let g:airline_powerline_fonts = 1
+set laststatus=2
+
+" ---- NERDTree -------------------------------------
+let NERDTreeMinimalUI=1
+let NERDTreeDirArrows=1
+
+" ---- Startify -------------------------------------
+let g:startify_custom_header = [
+            \'   Welcome to Vim, Keith!',
+            \'   ']
+
+" ---- Auto Saving ----------------------------------
+:au FocusLost * :wa
+inoremap <Esc> <Esc>:w<CR> 
+:hi NonText guifg=bg
+
+" ---- Basic Options --------------------------------
 syntax enable
 set top                     " The width of a TAB is set to 4.
 set shiftwidth=4            " Indents will have a width of 4
@@ -51,9 +105,6 @@ set softtabstop=4           " Sets the number of columns for a TAB
 set expandtab               " Expand TABs to spaces
 set number
 set clipboard=unnamed
-
-" vim-airline config
-set laststatus=2
 
 " Change cursor shape between insert and normal mode in iTerm2.app
 if $TERM_PROGRAM =~ "iTerm"
@@ -66,11 +117,7 @@ set nobackup
 set nowritebackup
 set noswapfile
 
-" Insert a new line under without going into insert mod>
-nmap <S-Enter> O<Esc>
-
-" LaTeX stuff
-
+" ---- LaTeX Suite ----------------------------------
 " IMPORTANT: win32 users will need to have 'shellslash' set so that latex
 " can be called correctly.
 set shellslash
@@ -86,13 +133,3 @@ set grepprg=grep\ -nH\ $*
 " The following changes the default filetype back to 'tex':
 let g:tex_flavor='latex'
 
-" Enable auto saving
-let g:auto_save = 1
-
-:au FocusLost * :wa
-inoremap <Esc> <Esc>:w<CR> 
-:hi NonText guifg=bg
-
-let g:startify_custom_header = [
-            \'   Welcome to Vim, Keith!',
-            \'   ']
