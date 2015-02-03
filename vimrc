@@ -2,7 +2,7 @@
 let &t_Co=256
 set term=xterm-256color
 set background=dark
-colorscheme gruvbox
+colorscheme base16-flat
 
 " ---- Vundle ---------------------------------------
 set nocompatible
@@ -40,18 +40,23 @@ map <F3> :NERDTree<CR>
 map <F4> :call JsBeautify()<CR>
 map <F5> :PluginInstall<CR>
 
+" Make vim time out faster
+set timeoutlen=1000 ttimeoutlen=0
+
 " Leader mappings
 let mapleader = "\<Space>"
-map <Leader>ev :e ~/.vimrc<CR>
 nnoremap <Leader>o :CtrlP<CR>
 nnoremap <Leader>w :w<CR>
-nnoremap <Leader>wq :wq<CR>
 nnoremap <Leader>q :q<CR>
 nnoremap <Leader>g yyp
 nnoremap <Leader>q :q<CR>
-nnoremap <Leader><Leader> :
 nnoremap ;j <Esc>:update<Cr>
 nnoremap <Leader>; <S-a>;<Esc>
+
+" Leader modify dotfiles
+map <Leader>ev :e ~/.vimrc<CR>
+map <Leader>eg :e ~/.gvimrc<CR>
+map <Leader>ez :e ~/.zshrc<CR>
 
 " Split movement keybinds
 nnoremap <Leader>h <C-w>h
@@ -59,6 +64,7 @@ nnoremap <Leader>j <C-w>j
 nnoremap <Leader>k <C-w>k
 nnoremap <Leader>l <C-w>l
 nnoremap <Leader>f <C-w>w
+nnoremap <Leader>s <C-w>s
 
 inoremap {<CR> {<CR>}<C-o>O
 
@@ -134,3 +140,7 @@ set grepprg=grep\ -nH\ $*
 " The following changes the default filetype back to 'tex':
 let g:tex_flavor='latex'
 
+" FIX: PluginUpdate => git pull: git-sh-setup: No such file or directory in MacVim (OK in non-GUI version of Vim)
+if has("gui_macvim")
+    set shell=/bin/bash\ -l
+endif
