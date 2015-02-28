@@ -1,8 +1,8 @@
 " ---- Color Scheme ---------------------------------
 let &t_Co=256
 set term=xterm-256color
-set background=dark
-colorscheme base16-flat
+set background=light
+colorscheme base16-solarized
 
 " ---- Vundle ---------------------------------------
 set nocompatible
@@ -10,61 +10,93 @@ filetype off
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
+" Required
+Plugin 'gmarik/Vundle.vim'
+
 Plugin 'tpope/vim-fugitive'
+Plugin 'tpope/vim-repeat'
 Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-commentary'
+
+" File system browsing with <->
 Plugin 'tpope/vim-vinegar'
-Plugin 'gmarik/Vundle.vim'
+Plugin 'scrooloose/nerdtree'
+
 Plugin 'junegunn/goyo.vim'
 Plugin 'mhinz/vim-startify'
-Plugin 'terryma/vim-multiple-cursors'
-Plugin 'altercation/vim-colors-solarized'
 Plugin 'lervag/vim-latex'
 Plugin 'bling/vim-airline'
-Plugin 'scrooloose/nerdtree'
-Plugin 'pangloss/vim-javascript'
 Plugin 'kien/ctrlp.vim'
-Plugin 'jshint/jshint'
-Plugin 'maksimr/vim-jsbeautify'
+Plugin 'terryma/vim-multiple-cursors'
 Plugin 'scrooloose/syntastic'
 Plugin 'terryma/vim-expand-region'
+Plugin 'garbas/vim-snipmate'
+Plugin 'koron/nyancat-vim'
+
+" Autocompletion for braces, parenthesis, quotes, etc.
 Plugin 'Raimondi/delimitMate'
 
+" Javascript
+Plugin 'pangloss/vim-javascript'
+Plugin 'jshint/jshint'
+Plugin 'maksimr/vim-jsbeautify'
+
+" Neocomplete
+Plugin 'MarcWeber/vim-addon-mw-utils'
+Plugin 'tomtom/tlib_vim'
+Plugin 'Shougo/neocomplete'
+
+" Colorschemes
+Plugin 'altercation/vim-colors-solarized'
 call vundle#end()
 filetype plugin indent on
 
 " ---- Keybinds -------------------------------------
-" Plugin hotkeys
-map <F2> :Goyo<CR>
-map <F3> :NERDTree<CR>
-map <F4> :call JsBeautify()<CR>
-map <F5> :PluginInstall<CR>
-
-" Make vim time out faster
-set timeoutlen=1000 ttimeoutlen=0
-
 " Leader mappings
 let mapleader = "\<Space>"
 nnoremap <Leader>o :CtrlP<CR>
 nnoremap <Leader>w :w<CR>
-nnoremap <Leader>q :q<CR>
 nnoremap <Leader>g yyp
 nnoremap <Leader>q :q<CR>
 nnoremap ;j <Esc>:update<Cr>
+
+" Insert at end of line
 nnoremap <Leader>; <S-a>;<Esc>
+nnoremap <Leader>, <S-a>,<Esc>
+
+" Plugin hotkeys
+nnoremap <Leader>1 :Goyo<CR>
+nnoremap <Leader>3 :call JsBeautify()<CR>
+nnoremap <Leader>4 :SyntasticToggleMode<CR>
+nnoremap <Leader>0 :PluginInstall<CR>
+
+nnoremap <Leader>c :SyntasticCheck<CR>
 
 " Leader modify dotfiles
 map <Leader>ev :e ~/.vimrc<CR>
 map <Leader>eg :e ~/.gvimrc<CR>
 map <Leader>ez :e ~/.zshrc<CR>
+map <Leader>dot :e ~/<CR>
+
+" Leader go to directory
+map <Leader>er :e ~/Desktop/projects<CR>
+map <Leader>lr :e ~/Desktop/learn<CR>
+map <Leader>sc :e ~/Dropbox/Spring2014/<CR>
 
 " Split movement keybinds
-nnoremap <Leader>h <C-w>h
 nnoremap <Leader>j <C-w>j
 nnoremap <Leader>k <C-w>k
 nnoremap <Leader>l <C-w>l
 nnoremap <Leader>f <C-w>w
 nnoremap <Leader>s <C-w>s
+nnoremap <Leader>v <C-w>v
+
+" Buffer mappings
+nnoremap <Leader>h :bprevious<CR>
+nnoremap <Leader>l :bnext<CR>
+
+" Close current buffer and move to previous one
+nnoremap <Leader>q :bp <BAR> bd #<CR>
 
 inoremap {<CR> {<CR>}<C-o>O
 
@@ -86,13 +118,50 @@ let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 
 let g:syntastic_javascript_checkers = ['jshint']
+let g:syntastic_javascript_checkers = ['jsxhint']
+
+let g:syntastic_mode_map = { 'mode': 'passive' }
+
+" ---- neocompleteme --------------------------------
+let g:neocomplete#enable_at_startup = 1
+
+" <TAB>: completetion.
+inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+
+
 " ---- Airline --------------------------------------
 let g:airline_powerline_fonts = 1
 set laststatus=2
 
+" List buffers on the top
+let g:airline#extensions#tabline#enabled = 1
+
+" Show just filename
+let g:airline#extensions#tabline#fnamemod = ':t'
+
 " ---- NERDTree -------------------------------------
 let NERDTreeMinimalUI=1
 let NERDTreeDirArrows=1
+
+" ---- Ctrl-P ---------------------------------------
+"  Setup some default ignores
+let g:ctrlp_custom_ignore = {
+  \ 'dir':  '\v[\/](\.(git|hg|svn)|\_site)$',
+  \ 'file': '\v\.(exe|so|dll|class|png|jpg|jpeg)$',
+\}
+
+" Use the nearest .git directory as the cwd
+" This makes a lot of sense if you are working on a project that is
+" in version control. It also supports works with .svn, .hg, .bzr.
+let g:ctrlp_working_path_mode = 'r'
+
+" Use a leader instead of the actual named binding
+nmap <leader>p :CtrlP<cr>
+
+" Easy bindings for its various modes
+nmap <leader>bb :CtrlPBuffer<cr>
+nmap <leader>bm :CtrlPMixed<cr>
+nmap <leader>bs :CtrlPMRU<cr>
 
 " ---- Startify -------------------------------------
 let g:startify_custom_header = [
@@ -124,23 +193,6 @@ set nobackup
 set nowritebackup
 set noswapfile
 
-" ---- LaTeX Suite ----------------------------------
-" IMPORTANT: win32 users will need to have 'shellslash' set so that latex
-" can be called correctly.
-set shellslash
+" Make vim time out faster from ESC
+set timeoutlen=1000 ttimeoutlen=0
 
-" IMPORTANT: grep will sometimes skip displaying the file name if you
-" search in a singe file. This will confuse Latex-Suite. Set your grep
-" program to always generate a file-name.
-set grepprg=grep\ -nH\ $*
-
-" OPTIONAL: Starting with Vim 7, the filetype of empty .tex files defaults
-" to
-" 'plaintex' instead of 'tex', which results in vim-latex not being loaded.
-" The following changes the default filetype back to 'tex':
-let g:tex_flavor='latex'
-
-" FIX: PluginUpdate => git pull: git-sh-setup: No such file or directory in MacVim (OK in non-GUI version of Vim)
-if has("gui_macvim")
-    set shell=/bin/bash\ -l
-endif
