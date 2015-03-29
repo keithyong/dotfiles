@@ -7,15 +7,16 @@ export PATH=$HOME/bin:/usr/local/bin:$PATH
 export PATH=/var/lib/mongodb/bin:$PATH
 export PATH=/usr/local/mysql/bin:$PATH
 export PATH=/usr/local/mysql/bin:$PATH
-export PYTHONPATH=/lib/python2.7/site-packages/
+export PATH=/Applications/Postgres.app/Contents/Versions/9.4/bin:$PATH
 
 alias mongodaemon="sudo mongod --fork --logpath /var/lib/mongodb/mongodlog.log"
-alias keithyssh="ssh -p 4444 keithy@104.131.118.167"
+alias keithyssh="ssh root@104.236.57.155"
 alias music="ncmpcpp"
 alias school="cd ~/Dropbox/Spring2014"
 alias push="git push origin master"
 alias am="git commit -am"
 alias proj="cd ~/Desktop/projects && clear && ls"
 alias learn="cd ~/Desktop/learn && clear && ls"
+alias int="cd ~/Desktop/interview-questions && clear && ls"
 
 KEITHYSERVER='104.131.118.167'

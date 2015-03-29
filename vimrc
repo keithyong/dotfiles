@@ -4,6 +4,14 @@ set term=xterm-256color
 set background=light
 colorscheme base16-solarized
 
+" Switch between light and dark based on time of day
+let hour = strftime("%H")
+if 6 <= hour && hour < 18
+  set background=light
+else
+  set background=dark
+endif
+
 " ---- Vundle ---------------------------------------
 set nocompatible
 filetype off
@@ -17,6 +25,7 @@ Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-repeat'
 Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-commentary'
+Plugin 'godlygeek/tabular'
 
 " File system browsing with <->
 Plugin 'tpope/vim-vinegar'
@@ -26,12 +35,16 @@ Plugin 'junegunn/goyo.vim'
 Plugin 'mhinz/vim-startify'
 Plugin 'lervag/vim-latex'
 Plugin 'bling/vim-airline'
-Plugin 'kien/ctrlp.vim'
 Plugin 'terryma/vim-multiple-cursors'
 Plugin 'scrooloose/syntastic'
 Plugin 'terryma/vim-expand-region'
 Plugin 'garbas/vim-snipmate'
 Plugin 'koron/nyancat-vim'
+Plugin 'ryanss/vim-hackernews'
+
+" ctrlp
+Plugin 'kien/ctrlp.vim'
+Plugin 'FelikZ/ctrlp-py-matcher'
 
 " Autocompletion for braces, parenthesis, quotes, etc.
 Plugin 'Raimondi/delimitMate'
@@ -40,11 +53,15 @@ Plugin 'Raimondi/delimitMate'
 Plugin 'pangloss/vim-javascript'
 Plugin 'jshint/jshint'
 Plugin 'maksimr/vim-jsbeautify'
+Plugin 'jelera/vim-javascript-syntax'
 
 " Neocomplete
 Plugin 'MarcWeber/vim-addon-mw-utils'
 Plugin 'tomtom/tlib_vim'
 Plugin 'Shougo/neocomplete'
+
+" Syntax plugins
+Plugin 'digitaltoad/vim-jade'
 
 " Colorschemes
 Plugin 'altercation/vim-colors-solarized'
@@ -54,9 +71,10 @@ filetype plugin indent on
 " ---- Keybinds -------------------------------------
 " Leader mappings
 let mapleader = "\<Space>"
-nnoremap <Leader>o :CtrlP<CR>
 nnoremap <Leader>w :w<CR>
 nnoremap <Leader>g yyp
+nnoremap <Leader>o o<Esc>
+nnoremap <Leader>O O<Esc>
 nnoremap <Leader>q :q<CR>
 nnoremap ;j <Esc>:update<Cr>
 
@@ -80,23 +98,32 @@ map <Leader>dot :e ~/<CR>
 
 " Leader go to directory
 map <Leader>er :e ~/Desktop/projects<CR>
-map <Leader>lr :e ~/Desktop/learn<CR>
+map <Leader>el :e ~/Desktop/learn<CR>
 map <Leader>sc :e ~/Dropbox/Spring2014/<CR>
+
+" Open HackerNews
+nnoremap <Leader>ehn :HackerNews<CR>
 
 " Split movement keybinds
 nnoremap <Leader>j <C-w>j
 nnoremap <Leader>k <C-w>k
 nnoremap <Leader>l <C-w>l
+nnoremap <Leader>h <C-w>h
+
 nnoremap <Leader>f <C-w>w
 nnoremap <Leader>s <C-w>s
 nnoremap <Leader>v <C-w>v
 
 " Buffer mappings
-nnoremap <Leader>h :bprevious<CR>
-nnoremap <Leader>l :bnext<CR>
+nnoremap H :bprevious<CR>
+nnoremap L :bn<CR>
+
+" Movement
+nnoremap <D-j> 5jzz
+nnoremap <D-k> 5kzz
 
 " Close current buffer and move to previous one
-nnoremap <Leader>q :bp <BAR> bd #<CR>
+nnoremap <Leader>x :bp <BAR> bd #<CR>
 
 inoremap {<CR> {<CR>}<C-o>O
 
@@ -107,10 +134,12 @@ nmap <S-Enter> O<Esc>
 vmap v <Plug>(expand_region_expand)
 vmap <C-v> <Plug>(expand_region_shrink)
 
+
+
 " ---- Syntastic ------------------------------------
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
+" set statusline+=%#warningmsg#
+" set statusline+=%{SyntasticStatuslineFlag()}
+" set statusline+=%*
 
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
@@ -131,7 +160,7 @@ inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 
 " ---- Airline --------------------------------------
 let g:airline_powerline_fonts = 1
-set laststatus=2
+" set laststatus=2
 
 " List buffers on the top
 let g:airline#extensions#tabline#enabled = 1
@@ -149,6 +178,16 @@ let g:ctrlp_custom_ignore = {
   \ 'dir':  '\v[\/](\.(git|hg|svn)|\_site)$',
   \ 'file': '\v\.(exe|so|dll|class|png|jpg|jpeg)$',
 \}
+
+" Use ag search. Must install from https://github.com/ggreer/the_silver_searcher.
+" Makes Ctrl-P MUCH faster
+let g:ctrlp_user_command = 'ag %s -i --nocolor --nogroup --hidden
+      \ --ignore .git
+      \ --ignore .svn
+      \ --ignore .hg
+      \ --ignore .DS_Store
+      \ --ignore "**/*.pyc"
+      \ -g ""'
 
 " Use the nearest .git directory as the cwd
 " This makes a lot of sense if you are working on a project that is
@@ -181,7 +220,7 @@ set softtabstop=4           " Sets the number of columns for a TAB
 set expandtab               " Expand TABs to spaces
 set number
 set clipboard=unnamed
-
+set nrformats=              " Don't use octal scheme for [num]<C-a> and <C-x>"
 " Change cursor shape between insert and normal mode in iTerm2.app
 if $TERM_PROGRAM =~ "iTerm"
     let &t_SI = "\<Esc>]50;CursorShape=1\x7"        " Vertical bar in insert mode
@@ -196,3 +235,5 @@ set noswapfile
 " Make vim time out faster from ESC
 set timeoutlen=1000 ttimeoutlen=0
 
+" .ejs syntax
+au BufNewFile,BufRead *.ejs set filetype=html
