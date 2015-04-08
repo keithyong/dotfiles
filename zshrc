@@ -13,10 +13,13 @@ alias mongodaemon="sudo mongod --fork --logpath /var/lib/mongodb/mongodlog.log"
 alias keithyssh="ssh root@104.236.57.155"
 alias music="ncmpcpp"
 alias school="cd ~/Dropbox/Spring2014"
-alias push="git push origin master"
-alias am="git commit -am"
 alias proj="cd ~/Desktop/projects && clear && ls"
 alias learn="cd ~/Desktop/learn && clear && ls"
 alias int="cd ~/Desktop/interview-questions && clear && ls"
+
+acp ()
+{
+        git add -A;git commit -m "$1";git push origin master
+}
 
 KEITHYSERVER='104.131.118.167'

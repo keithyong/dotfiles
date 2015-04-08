@@ -6,8 +6,11 @@
 
 ########## Variables
 
-dir=~/dotfiles                    # dotfiles directory
-files="bash_profile bashrc vimrc vim zshrc oh-my-zsh tmux.conf"    # list of files/folders to symlink in homedir
+# dotfiles directory
+dir=~/dotfiles                    
+
+# list of files/folders to symlink in homedir
+files="bash_profile bashrc vimrc vim zshrc oh-my-zsh tmux.conf"    
 
 # change to the dotfiles directory
 echo "Changing to the $dir directory"
