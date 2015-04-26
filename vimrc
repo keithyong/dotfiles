@@ -1,19 +1,19 @@
 nnoremap l <nop>
 nnoremap h <nop>
 
-
 " ---- Color Scheme ---------------------------------
 let &t_Co=256
 set term=xterm-256color
 colorscheme base16-solarized
+set background=dark
 
-" Switch between light and dark based on time of day
-let hour = strftime("%H")
-if 6 <= hour && hour < 18
-  set background=light
-else
-  set background=dark
-endif
+" " Switch between light and dark based on time of day
+" let hour = strftime("%H")
+" if 6 <= hour && hour < 18
+"   set background=light
+" else
+"   set background=dark
+" endif
 
 " ---- Vundle ---------------------------------------
 set nocompatible
@@ -53,6 +53,7 @@ Plugin 'jshint/jshint'
 Plugin 'maksimr/vim-jsbeautify'
 Plugin 'jelera/vim-javascript-syntax'
 Plugin 'digitaltoad/vim-jade'
+Plugin 'marijnh/tern_for_vim'
 
 " Latex
 Plugin 'lervag/vim-latex'
@@ -87,7 +88,7 @@ nnoremap <Leader>1 :Goyo<CR>
 nnoremap <Leader>3 :call JsBeautify()<CR>
 nnoremap <Leader>4 :SyntasticToggleMode<CR>
 nnoremap <Leader>0 :PluginInstall<CR>
-nnoremap <Leader>t :Tabularize/
+" nnoremap <Leader>t :Tabularize/
 
 " Call :UltiSnipsEdit to edit the current
 " snippets file for the current extension.
@@ -216,6 +217,10 @@ let g:ctrlp_working_path_mode = 'r'
 let g:startify_custom_header = [
             \'   Welcome to Vim, Keith!',
             \'   ']
+
+" ---- TernJS ---------------------------------------
+let g:tern_show_argument_hints='on_hold'
+nnoremap <Leader>td :TernDoc<CR>
 
 " ---- Auto Saving ----------------------------------
 :au FocusLost * :wa

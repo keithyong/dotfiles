@@ -8,18 +8,22 @@ export PATH=/var/lib/mongodb/bin:$PATH
 export PATH=/usr/local/mysql/bin:$PATH
 export PATH=/usr/local/mysql/bin:$PATH
 export PATH=/Applications/Postgres.app/Contents/Versions/9.4/bin:$PATH
+export PATH=/lib/python2.7/site-packages:$PATH
 
 alias mongodaemon="sudo mongod --fork --logpath /var/lib/mongodb/mongodlog.log"
 alias keithyssh="ssh root@104.236.57.155"
-alias music="ncmpcpp"
+alias shawnssh="ssh root@104.236.115.243"
 alias school="cd ~/Dropbox/Spring2014"
-alias proj="cd ~/Desktop/projects && clear && ls"
-alias learn="cd ~/Desktop/learn && clear && ls"
+
+alias er="cd ~/Desktop/projects && clear && ls"
+alias el="cd ~/Desktop/learn && clear && ls"
+alias ec="cd ~/Desktop/projects/pyramus;mvim .;nodemon app.js"
 alias int="cd ~/Desktop/interview-questions && clear && ls"
 
-acp ()
-{
-        git add -A;git commit -m "$1";git push origin master
+alias pg="psql -U postgres"
+
+acp() {
+    git add -A;git commit -m "$1";git push origin master
 }
 
 KEITHYSERVER='104.131.118.167'
