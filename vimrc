@@ -1,21 +1,14 @@
+" vim: set foldmethod=marker foldlevel=0:
+colorscheme base16-flat
+set background=dark
+
+" Disable h and l
 nnoremap l <nop>
 nnoremap h <nop>
 
-" ---- Color Scheme ---------------------------------
-let &t_Co=256
-set term=xterm-256color
-colorscheme base16-solarized
-set background=dark
-
-" " Switch between light and dark based on time of day
-" let hour = strftime("%H")
-" if 6 <= hour && hour < 18
-"   set background=light
-" else
-"   set background=dark
-" endif
-
-" ---- Vundle ---------------------------------------
+" ============================================================================
+" PLUGINS {{{
+" ============================================================================
 set nocompatible
 filetype off
 set rtp+=~/.vim/bundle/Vundle.vim
@@ -66,10 +59,48 @@ Plugin 'Shougo/neocomplete'
 " UltiSnips
 Plugin 'SirVer/ultisnips'
 
+" Jinja2
+Plugin 'Glench/Vim-Jinja2-Syntax'
+
 call vundle#end()
 filetype plugin indent on
 
-" ---- Keybinds -------------------------------------
+" }}}
+" ============================================================================
+" BASIC OPTIONS {{{
+" ============================================================================
+syntax enable
+set top                     " The width of a TAB is set to 4.
+set shiftwidth=4            " Number of spaces for a TAB
+set softtabstop=4           " Number of spaces in TAB when editing
+set expandtab               " Expand TABs to spaces
+set number                  " Show line numbers
+set clipboard=unnamed       " Share with system clipboard
+
+set nrformats=              " Don't use octal scheme for [num]<C-a> and <C-x>"
+
+" Disable backup and swap files
+set nobackup
+set nowritebackup
+set noswapfile
+
+" Return cursor to previous position on load
+autocmd BufReadPost * normal `"
+
+" Trim whitespace on save
+autocmd BufWritePre * %s/\s\+$//e
+
+" .ejs syntax
+au BufNewFile,BufRead *.ejs set filetype=html
+
+" Basic colorscheme settings
+let &t_Co=256
+set term=xterm-256color
+
+" }}}
+" ============================================================================
+" KEYBINDS {{{
+" ============================================================================
 " Leader mappings
 let mapleader = "\<Space>"
 nnoremap <Leader>w :w<CR>
@@ -88,7 +119,9 @@ nnoremap <Leader>1 :Goyo<CR>
 nnoremap <Leader>3 :call JsBeautify()<CR>
 nnoremap <Leader>4 :SyntasticToggleMode<CR>
 nnoremap <Leader>0 :PluginInstall<CR>
-" nnoremap <Leader>t :Tabularize/
+
+" Open Up Tabularize on command line
+nnoremap <Leader>t :Tabularize/
 
 " Call :UltiSnipsEdit to edit the current
 " snippets file for the current extension.
@@ -97,15 +130,16 @@ nnoremap <Leader>use :UltiSnipsEdit<CR>
 nnoremap <Leader>c :SyntasticCheck<CR>
 
 " Leader modify dotfiles
-map <Leader>ev :e ~/.vimrc<CR>
-map <Leader>eg :e ~/.gvimrc<CR>
-map <Leader>ez :e ~/.zshrc<CR>
+nnoremap <Leader>ev :e ~/.vimrc<CR>
+nnoremap <Leader>eg :e ~/.gvimrc<CR>
+nnoremap <Leader>ez :e ~/.zshrc<CR>
 
 " Leader go to directory
-map <Leader>er :e ~/Desktop/projects<CR>
-map <Leader>el :e ~/Desktop/learn<CR>
-map <Leader>ec :e ~/Desktop/projects/pyramus<CR>
-map <Leader>sc :e ~/Dropbox/Spring2014/<CR>
+nnoremap <Leader>er :e ~/Desktop/projects<CR>
+nnoremap <Leader>el :e ~/Desktop/learn<CR>
+nnoremap <Leader>ei :e ~/Desktop/interview-questions<CR>
+nnoremap <Leader>ec :e ~/Desktop/projects/pyramus<CR>
+nnoremap <Leader>esc :e ~/Dropbox/Spring2014/<CR>
 
 " Split movement keybinds
 nnoremap <Leader>j <C-w>j
@@ -136,7 +170,10 @@ inoremap {<CR> {<CR>}<C-o>O
 " Insert a new line under without going into insert mod>
 nmap <S-Enter> o<Esc>
 
-" ---- Syntastic ------------------------------------
+" }}}
+" ============================================================================
+" SYNTASTIC {{{
+" ============================================================================
 " set statusline+=%#warningmsg#
 " set statusline+=%{SyntasticStatuslineFlag()}
 " set statusline+=%*
@@ -151,12 +188,18 @@ let g:syntastic_javascript_checkers = ['jsxhint']
 
 let g:syntastic_mode_map = { 'mode': 'passive' }
 
-" ---- neocompleteme --------------------------------
+" }}}
+" ============================================================================
+" NEOCOMPLETEME {{{
+" ============================================================================
 let g:neocomplete#enable_at_startup = 1
 let g:neocomplete#enable_fuzzy_completion = 0
 let g:neocomplete#enable_smart_case = 1
 
-" ---- vim-multiple-cursors -------------------------
+" }}}
+" ============================================================================
+" VIM-MULTIPLE-CURSORS {{{
+" ============================================================================
 " Make plugin neocompleteme friendly
  function! Multiple_cursors_before()
     exe 'NeoCompleteLock'
@@ -171,7 +214,10 @@ endfunction
 " <TAB>: completetion.
 inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 
-" ---- Airline --------------------------------------
+" }}}
+" ============================================================================
+" AIRLINE {{{
+" ============================================================================
 let g:airline_powerline_fonts = 1
 " set laststatus=2
 
@@ -181,17 +227,26 @@ let g:airline#extensions#tabline#enabled = 1
 " Show just filename
 let g:airline#extensions#tabline#fnamemod = ':t'
 
-" ---- NERDTree -------------------------------------
+" }}}
+" ============================================================================
+" NERDTREE {{{
+" ============================================================================
 let NERDTreeMinimalUI=1
 let NERDTreeDirArrows=1
 
-" ---- UltiSnips ------------------------------------
+" }}}
+" ============================================================================
+" ULTISNIPS {{{
+" ============================================================================
 " Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
 let g:UltiSnipsExpandTrigger="<c-j>"
 let g:UltiSnipsJumpForwardTrigger="<c-j>"
 let g:UltiSnipsJumpBackwardTrigger="<c-k>"
 
-" ---- Ctrl-P ---------------------------------------
+" }}}
+" ============================================================================
+" CTRL-P {{{
+" ============================================================================
 "  Setup some default ignores
 let g:ctrlp_custom_ignore = {
   \ 'dir':  '\v[\/](\.(git|hg|svn|DS_Store)|\_site\|node_modules)$',
@@ -213,41 +268,26 @@ let g:ctrlp_user_command = 'ag %s -i --nocolor --nogroup --hidden
 " in version control. It also supports works with .svn, .hg, .bzr.
 let g:ctrlp_working_path_mode = 'r'
 
-" ---- Startify -------------------------------------
+" }}}
+" ============================================================================
+" STARTIFY {{{
+" ============================================================================
 let g:startify_custom_header = [
             \'   Welcome to Vim, Keith!',
             \'   ']
 
-" ---- TernJS ---------------------------------------
+" }}}
+" ============================================================================
+" TERNJS {{{
+" ============================================================================
 let g:tern_show_argument_hints='on_hold'
 nnoremap <Leader>td :TernDoc<CR>
 
-" ---- Auto Saving ----------------------------------
+" }}}
+" ============================================================================
+" AUTO-SAVE OPTIONS {{{
+" ============================================================================
 :au FocusLost * :wa
 inoremap <Esc> <Esc>:w<CR>
 :hi NonText guifg=bg
 
-" ---- Basic Options --------------------------------
-syntax enable
-set top                     " The width of a TAB is set to 4.
-set shiftwidth=4            " Number of spaces for a TAB
-set softtabstop=4           " Number of spaces in TAB when editing
-set expandtab               " Expand TABs to spaces
-set number                  " Show line numbers
-set clipboard=unnamed       " Share with system clipboard
-
-set nrformats=              " Don't use octal scheme for [num]<C-a> and <C-x>"
-
-" Disable backup and swap files
-set nobackup
-set nowritebackup
-set noswapfile
-
-" Return cursor to previous position on load
-autocmd BufReadPost * normal `"
-
-" Trim whitespace on save
-autocmd BufWritePre * %s/\s\+$//e
-
-" .ejs syntax
-au BufNewFile,BufRead *.ejs set filetype=html

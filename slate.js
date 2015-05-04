@@ -1,53 +1,63 @@
-var webdevLayout = slate.layout("webdev", {
-    "MacVim": {
-        "operations": [pushTopRightTwoThirds],
-        "repeat": true
-    },
-    "iTerm": {
-        "operations": [pushBottomRightOneThird],
-        "repeat": true
-    },
-    "Google Chrome": {
-        "operations": [pushLeft],
-        "repeat": true
-    }
+var hint = slate.operation("hint", {
+    "characters": "JKL;FDSHO"
 });
+slate.bind("esc:cmd", hint);
 
-var doWebdevLayout = slate.operation("layout", { "name": webdevLayout });
-
-var pushTopRightTwoThirds = slate.operation("corner", {
-    "direction": "top-right",
-    "width": "screenSizeX/2",
-    "height": "2*screenSizeY/3"
-});
-var pushBottomRightOneThird = slate.operation("corner", {
-    "direction": "bottom-right",
-    "width": "screenSizeX/2",
-    "height": "screenSizeY/3"
-});
 var pushRight = slate.operation("push", {
   "direction" : "right",
   "style" : "bar-resize:screenSizeX/2"
 });
+
+var pushRightTwoThirds = slate.operation("push", {
+    "direction": "right",
+    "style": "bar-resize:2*screenSizeX/3"
+});
+
+var k_count = 0;
+slate.bind("k:cmd,shift", function(win) {
+    k_count++;
+    if (k_count == 1) {
+        win.doOperation(pushRight);
+    }
+    else if (k_count == 2) {
+        win.doOperation(pushRightTwoThirds);
+        k_count = 0;
+    }
+});
+
+/* Operations for j */
 var pushLeft = slate.operation("push", {
   "direction" : "left",
   "style" : "bar-resize:screenSizeX/2"
 });
-var pushTop = slate.operation("push", {
-  "direction" : "top",
-  "style" : "bar-resize:screenSizeY/2"
+
+var pushLeftTwoThirds = slate.operation("push", {
+    "direction": "left",
+    "style": "bar-resize:2*screenSizeX/3"
 });
+
+var j_count = 0;
+slate.bind("j:cmd,shift", function(win) {
+    j_count++;
+    if (j_count == 1) {
+        win.doOperation(pushLeft);
+    }
+    else if (j_count == 2) {
+        win.doOperation(pushLeftTwoThirds);
+        j_count = 0;
+    }
+});
+
+/* Fullscreen */
 var fullscreen = slate.operation("move", {
   "x" : "screenOriginX",
   "y" : "screenOriginY",
   "width" : "screenSizeX",
   "height" : "screenSizeY"
 });
+slate.bind(";:shift,cmd", fullscreen);
 
-var hint = slate.operation("hint", {
-    "characters": "JKL;FDSHO"
-});
-
+/* Operations for l */
 var pushTopRight = slate.operation("corner", {
     "direction": "top-right",
     "width": "screenSizeX/2",
@@ -60,6 +70,20 @@ var pushBottomRight = slate.operation("corner", {
     "height": "screenSizeY/2"
 });
 
+var l_count = 0;
+slate.bind("l:cmd,shift", function(win) {
+    l_count++;
+    if (l_count == 1) {
+        win.doOperation(pushTopRight);
+    }
+    else if (l_count == 2) {
+        win.doOperation(pushBottomRight);
+        l_count = 0;
+    }
+});
+
+
+/* Operations for h */
 var pushTopLeft = slate.operation("corner", {
     "direction": "top-left",
     "width": "screenSizeX/2",
@@ -71,6 +95,19 @@ var pushBottomLeft = slate.operation("corner", {
     "width": "screenSizeX/2",
     "height": "screenSizeY/2"
 });
+
+var h_count = 0;
+slate.bind("h:cmd,shift", function(win) {
+    h_count++;
+    if (h_count == 1) {
+        win.doOperation(pushTopLeft);
+    }
+    else if (h_count == 2) {
+        win.doOperation(pushBottomLeft);
+        h_count = 0;
+    }
+});
+
 
 /* Operations for left thirds */
 var pushLeftThird = slate.operation("push", {
@@ -177,35 +214,3 @@ slate.bind(",:cmd,shift", function(win) {
         comma_count = 0;
     }
 });
-
-var l_count = 0;
-slate.bind("l:cmd,shift", function(win) {
-    l_count++;
-    if (l_count == 1) {
-        win.doOperation(pushTopRight);
-    }
-    else if (l_count == 2) {
-        win.doOperation(pushBottomRight);
-        l_count = 0;
-    }
-});
-
-var h_count = 0;
-slate.bind("h:cmd,shift", function(win) {
-    h_count++;
-    if (h_count == 1) {
-        win.doOperation(pushTopLeft);
-    }
-    else if (h_count == 2) {
-        win.doOperation(pushBottomLeft);
-        h_count = 0;
-    }
-});
-
-slate.bind("j:cmd,shift", pushLeft);
-slate.bind("k:cmd,shift", pushRight);
-slate.bind(";:shift,cmd", fullscreen);
-slate.bind("esc:cmd", hint);
-
-slate.bind(".:cmd,shift", pushRightThird);
-

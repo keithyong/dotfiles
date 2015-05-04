@@ -13,6 +13,7 @@ export PATH=/lib/python2.7/site-packages:$PATH
 alias mongodaemon="sudo mongod --fork --logpath /var/lib/mongodb/mongodlog.log"
 alias keithyssh="ssh root@104.236.57.155"
 alias shawnssh="ssh root@104.236.115.243"
+alias fabssh="ssh keith@104.131.104.158"
 alias school="cd ~/Dropbox/Spring2014"
 
 alias er="cd ~/Desktop/projects && clear && ls"
