@@ -1,5 +1,5 @@
 " vim: set foldmethod=marker foldlevel=0:
-colorscheme base16-flat
+colorscheme base16-monokai
 set background=dark
 
 " Disable h and l
@@ -21,7 +21,6 @@ Plugin 'tpope/vim-repeat'
 Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-commentary'
 
-
 " File system browsing with '-' hotkey
 Plugin 'tpope/vim-vinegar'
 Plugin 'scrooloose/nerdtree'
@@ -31,7 +30,6 @@ Plugin 'mhinz/vim-startify'
 Plugin 'bling/vim-airline'
 Plugin 'kristijanhusak/vim-multiple-cursors'
 Plugin 'scrooloose/syntastic'
-Plugin 'terryma/vim-expand-region'
 Plugin 'godlygeek/tabular'
 
 " ctrlp
@@ -49,7 +47,7 @@ Plugin 'digitaltoad/vim-jade'
 Plugin 'marijnh/tern_for_vim'
 
 " Latex
-Plugin 'lervag/vim-latex'
+Plugin 'lervag/vimtex'
 
 " Neocomplete
 Plugin 'MarcWeber/vim-addon-mw-utils'
@@ -127,6 +125,8 @@ nnoremap <Leader>t :Tabularize/
 " snippets file for the current extension.
 nnoremap <Leader>use :UltiSnipsEdit<CR>
 
+nnoremap <Leader>\\ :VimtexCompile<CR>
+
 nnoremap <Leader>c :SyntasticCheck<CR>
 
 " Leader modify dotfiles
@@ -144,7 +144,7 @@ nnoremap <Leader>esc :e ~/Dropbox/Spring2014/<CR>
 " Split movement keybinds
 nnoremap <Leader>j <C-w>j
 nnoremap <Leader>k <C-w>k
-nnoremap <Leader>l <C-w>l
+" nnoremap <Leader>l <C-w>l
 nnoremap <Leader>h <C-w>h
 
 nnoremap <Leader>f <C-w>w
@@ -291,3 +291,13 @@ nnoremap <Leader>td :TernDoc<CR>
 inoremap <Esc> <Esc>:w<CR>
 :hi NonText guifg=bg
 
+" }}}
+" ============================================================================
+" VIMTEX {{{
+" ============================================================================
+" Neocomplete integration
+if !exists('g:neocomplete#sources#omni#input_patterns')
+    let g:neocomplete#sources#omni#input_patterns = {}
+endif
+    let g:neocomplete#sources#omni#input_patterns.tex =
+    \ '\v\\\a*(ref|cite)\a*([^]]*\])?\{([^}]*,)*[^}]*'
