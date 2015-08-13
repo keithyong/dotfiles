@@ -1,7 +1,7 @@
 " vim: set foldmethod=marker foldlevel=0:
-colorscheme base16-monokai
-set background=dark
-
+set t_Co=256
+colorscheme base16-solarized
+set background=light
 " Disable h and l
 nnoremap l <nop>
 nnoremap h <nop>
@@ -15,6 +15,7 @@ set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
 Plugin 'gmarik/Vundle.vim'
+Plugin 'chriskempson/base16-vim'
 
 Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-repeat'
@@ -44,7 +45,6 @@ Plugin 'jshint/jshint'
 Plugin 'maksimr/vim-jsbeautify'
 Plugin 'jelera/vim-javascript-syntax'
 Plugin 'digitaltoad/vim-jade'
-Plugin 'marijnh/tern_for_vim'
 
 " Latex
 Plugin 'lervag/vimtex'
@@ -60,6 +60,12 @@ Plugin 'SirVer/ultisnips'
 " Jinja2
 Plugin 'Glench/Vim-Jinja2-Syntax'
 
+" Ruby
+Plugin 'vim-ruby/vim-ruby'
+
+" ReactJS
+Plugin 'mxw/vim-jsx'
+
 call vundle#end()
 filetype plugin indent on
 
@@ -68,6 +74,7 @@ filetype plugin indent on
 " BASIC OPTIONS {{{
 " ============================================================================
 syntax enable
+set backspace=2
 set top                     " The width of a TAB is set to 4.
 set shiftwidth=4            " Number of spaces for a TAB
 set softtabstop=4           " Number of spaces in TAB when editing
@@ -76,6 +83,8 @@ set number                  " Show line numbers
 set clipboard=unnamed       " Share with system clipboard
 
 set nrformats=              " Don't use octal scheme for [num]<C-a> and <C-x>"
+
+set display+=lastline       " On long lines, always display them partially
 
 " Disable backup and swap files
 set nobackup
@@ -89,11 +98,13 @@ autocmd BufReadPost * normal `"
 autocmd BufWritePre * %s/\s\+$//e
 
 " .ejs syntax
-au BufNewFile,BufRead *.ejs set filetype=html
+" au BufNewFile,BufRead *.ejs set filetype=html
 
-" Basic colorscheme settings
-let &t_Co=256
-set term=xterm-256color
+" Set ruby index to be 2 spaces
+autocmd Filetype ruby setlocal ts=2 sts=2 sw=2
+
+set encoding=utf-8
+set guifont=Liberation\ Mono\ for\ Powerline:h14
 
 " }}}
 " ============================================================================
@@ -106,7 +117,6 @@ nnoremap <Leader>g yyp
 nnoremap <Leader>o o<Esc>
 nnoremap <Leader>O O<Esc>
 nnoremap <Leader>q :q<CR>
-nnoremap ;j <Esc>:update<Cr>
 
 " Insert at end of line
 nnoremap <Leader>; <S-a>;<Esc>
@@ -125,7 +135,7 @@ nnoremap <Leader>t :Tabularize/
 " snippets file for the current extension.
 nnoremap <Leader>use :UltiSnipsEdit<CR>
 
-nnoremap <Leader>\\ :VimtexCompile<CR>
+nnoremap <Leader>\\ <plug>(vimtex-compile-toggle)
 
 nnoremap <Leader>c :SyntasticCheck<CR>
 
@@ -138,7 +148,7 @@ nnoremap <Leader>ez :e ~/.zshrc<CR>
 nnoremap <Leader>er :e ~/Desktop/projects<CR>
 nnoremap <Leader>el :e ~/Desktop/learn<CR>
 nnoremap <Leader>ei :e ~/Desktop/interview-questions<CR>
-nnoremap <Leader>ec :e ~/Desktop/projects/pyramus<CR>
+nnoremap <Leader>ec :e ~/Desktop/projects/conf-main<CR>
 nnoremap <Leader>esc :e ~/Dropbox/Spring2014/<CR>
 
 " Split movement keybinds
@@ -162,8 +172,8 @@ nnoremap L :bn<CR>
 nnoremap <D-j> 5jzz
 nnoremap <D-k> 5kzz
 
-" Close current buffer and move to previous one
-nnoremap <Leader>x :bp <BAR> bd #<CR>
+" Close current buffer and move to next one
+nnoremap <Leader>x :bn <BAR> bd #<CR>
 
 inoremap {<CR> {<CR>}<C-o>O
 
@@ -192,7 +202,7 @@ let g:syntastic_mode_map = { 'mode': 'passive' }
 " ============================================================================
 " NEOCOMPLETEME {{{
 " ============================================================================
-let g:neocomplete#enable_at_startup = 1
+" let g:neocomplete#enable_at_startup = 1
 let g:neocomplete#enable_fuzzy_completion = 0
 let g:neocomplete#enable_smart_case = 1
 
@@ -275,13 +285,6 @@ let g:ctrlp_working_path_mode = 'r'
 let g:startify_custom_header = [
             \'   Welcome to Vim, Keith!',
             \'   ']
-
-" }}}
-" ============================================================================
-" TERNJS {{{
-" ============================================================================
-let g:tern_show_argument_hints='on_hold'
-nnoremap <Leader>td :TernDoc<CR>
 
 " }}}
 " ============================================================================
