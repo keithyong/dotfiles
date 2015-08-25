@@ -188,6 +188,9 @@ noremap <up>    <C-W>+
 noremap <down>  <C-W>-
 noremap <left>  3<C-W><
 noremap <right> 3<C-W>>
+
+" Date time insertions
+imap <Leader>;ds     <C-R>=strftime("%Y-%m-%d %T")<CR>
 " }}}
 " ============================================================================
 " SYNTASTIC {{{
