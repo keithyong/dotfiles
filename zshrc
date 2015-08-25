@@ -20,6 +20,7 @@ alias el="cd ~/Desktop/learn && clear && ls"
 alias ec="cd ~/Desktop/projects/conf-main && venv"
 alias esc="cd ~/Dropbox/Spring2014"
 alias eint="cd ~/Desktop/interview-questions && clear && ls"
+alias dsk="cd ~/Desktop"
 
 # Flask shortcut commands
 alias venv="source venv/bin/activate"
@@ -32,7 +33,12 @@ cl() {
 alias cl=cl
 
 alias pg="psql -U postgres"
+alias grep="ggrep --color=auto --exclude-dir={.git}"
+alias egrep="ggrep -E --color=auto --exclude-dir={.git}"
 
 acp() {
     git add -A;git commit -m "$1";git push origin master
 }
+
+PERL_MB_OPT="--install_base \"/Users/keithy/perl5\""; export PERL_MB_OPT;
+PERL_MM_OPT="INSTALL_BASE=/Users/keithy/perl5"; export PERL_MM_OPT;

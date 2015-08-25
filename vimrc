@@ -1,10 +1,11 @@
 " vim: set foldmethod=marker foldlevel=0:
-set t_Co=256
+" set t_Co=256
 colorscheme base16-solarized
 set background=light
 " Disable h and l
-nnoremap l <nop>
-nnoremap h <nop>
+" nnoremap l <nop>
+" nnoremap h <nop>
+"
 
 " ============================================================================
 " PLUGINS {{{
@@ -13,6 +14,8 @@ set nocompatible
 filetype off
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
+
+Plugin 'altercation/vim-colors-solarized'
 
 Plugin 'gmarik/Vundle.vim'
 Plugin 'chriskempson/base16-vim'
@@ -180,6 +183,11 @@ inoremap {<CR> {<CR>}<C-o>O
 " Insert a new line under without going into insert mod>
 nmap <S-Enter> o<Esc>
 
+" Use arrow keys to resize windows.
+noremap <up>    <C-W>+
+noremap <down>  <C-W>-
+noremap <left>  3<C-W><
+noremap <right> 3<C-W>>
 " }}}
 " ============================================================================
 " SYNTASTIC {{{
