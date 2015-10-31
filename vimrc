@@ -35,6 +35,7 @@ Plugin 'bling/vim-airline'
 Plugin 'kristijanhusak/vim-multiple-cursors'
 Plugin 'scrooloose/syntastic'
 Plugin 'godlygeek/tabular'
+Plugin 'gregsexton/MatchTag'
 
 " ctrlp
 Plugin 'kien/ctrlp.vim'
@@ -68,6 +69,7 @@ Plugin 'vim-ruby/vim-ruby'
 
 " ReactJS
 Plugin 'mxw/vim-jsx'
+
 
 call vundle#end()
 filetype plugin indent on
@@ -190,7 +192,7 @@ noremap <left>  3<C-W><
 noremap <right> 3<C-W>>
 
 " Date time insertions
-imap <Leader>;ds     <C-R>=strftime("%Y-%m-%d %T")<CR>
+" imap <Leader>;ds     <C-R>=strftime("%Y-%m-%d %T")<CR>
 " }}}
 " ============================================================================
 " SYNTASTIC {{{

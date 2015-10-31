@@ -35,6 +35,8 @@ alias cl=cl
 alias pg="psql -U postgres"
 alias grep="ggrep --color=auto --exclude-dir={.git}"
 alias egrep="ggrep -E --color=auto --exclude-dir={.git}"
+alias b="cd .. && ls"
+alias s="ls"
 
 acp() {
     git add -A;git commit -m "$1";git push origin master

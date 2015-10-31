@@ -4,8 +4,8 @@ var hint = slate.operation("hint", {
 slate.bind("esc:cmd", hint);
 
 var pushRight = slate.operation("push", {
-  "direction" : "right",
-  "style" : "bar-resize:screenSizeX/2"
+    "direction" : "right",
+    "style" : "bar-resize:screenSizeX/2"
 });
 
 var pushRightTwoThirds = slate.operation("push", {
@@ -27,8 +27,8 @@ slate.bind("k:cmd,shift", function(win) {
 
 /* Operations for j */
 var pushLeft = slate.operation("push", {
-  "direction" : "left",
-  "style" : "bar-resize:screenSizeX/2"
+    "direction" : "left",
+    "style" : "bar-resize:screenSizeX/2"
 });
 
 var pushLeftTwoThirds = slate.operation("push", {
@@ -50,10 +50,10 @@ slate.bind("j:cmd,shift", function(win) {
 
 /* Fullscreen */
 var fullscreen = slate.operation("move", {
-  "x" : "screenOriginX",
-  "y" : "screenOriginY",
-  "width" : "screenSizeX",
-  "height" : "screenSizeY"
+    "x" : "screenOriginX",
+    "y" : "screenOriginY",
+    "width" : "screenSizeX",
+    "height" : "screenSizeY"
 });
 slate.bind(";:shift,cmd", fullscreen);
 
@@ -130,6 +130,9 @@ var pushLeftThirdBottomHalf = slate.operation("corner", {
 /* Dynamic move for m key */
 var m_count = 0;
 slate.bind("m:cmd,shift", function(win) {
+    win.doOperation(pushLeftThird);
+
+    /*
     m_count++;
     if (m_count == 1) {
         win.doOperation(pushLeftThird);
@@ -141,6 +144,7 @@ slate.bind("m:cmd,shift", function(win) {
         win.doOperation(pushLeftThirdBottomHalf);
         m_count = 0;
     }
+    */
 });
 
 /* Operations for right thirds */
@@ -202,6 +206,8 @@ var pushCenterThirdBottomHalf = slate.operation("move", {
 /* Dynamic move for , key */
 var comma_count = 0;
 slate.bind(",:cmd,shift", function(win) {
+    win.doOperation(pushCenterThird);
+    /*
     comma_count++;
     if (comma_count == 1) {
         win.doOperation(pushCenterThird);
@@ -213,4 +219,5 @@ slate.bind(",:cmd,shift", function(win) {
         win.doOperation(pushCenterThirdBottomHalf);
         comma_count = 0;
     }
+    */
 });
