@@ -5,26 +5,27 @@ source $ZSH/oh-my-zsh.sh
 
 export PATH=$HOME/bin:/usr/local/bin:$PATH
 export PATH=/Applications/Postgres.app/Contents/Versions/9.4/bin:$PATH
+export PATH=/usr/local/play:$PATH
+export PATH=/usr/local/mysql/bin:$PATH
 
-export MAIL_SERVER='email-smtp.us-east-1.amazonaws.com'
-export MAIL_USERNAME='AKIAJ6NFIS3SHABI3DJQ'
-export MAIL_PASSWORD='Ar7iG5RIYCVyxADVDdckG5bGLBPorLlZeP+c8J7P4siy'
-export FLASKY_MAIL_SENDER='Flasky Admin <conferencytest@gmail.com>'
-export FLASKY_ADMIN='terda12@gmail.com'
+export GOPATH='/Users/keithy/Desktop/projects/go'
+export GOROOT='/usr/local/go'
 
 alias keithyssh="ssh root@104.236.57.155"
-alias school="cd ~/Dropbox/Spring2014"
+alias school="cd ~/Dropbox/Spring2016"
 
 alias er="cd ~/Desktop/projects && clear && ls"
 alias el="cd ~/Desktop/learn && clear && ls"
 alias ec="cd ~/Desktop/projects/conf-main && venv"
-alias esc="cd ~/Dropbox/Spring2014"
+alias esc="cd ~/Dropbox/Spring\ 2016"
 alias eint="cd ~/Desktop/interview-questions && clear && ls"
+alias ego="cd $GOPATH/src/github.com/keithyong"
 alias dsk="cd ~/Desktop"
 
 # Flask shortcut commands
 alias venv="source venv/bin/activate"
 alias runserver="python manage.py runserver"
+alias pm="python manage.py"
 
 cl() {
     cd $1
@@ -36,7 +37,6 @@ alias pg="psql -U postgres"
 alias grep="ggrep --color=auto --exclude-dir={.git}"
 alias egrep="ggrep -E --color=auto --exclude-dir={.git}"
 alias b="cd .. && ls"
-alias s="ls"
 
 acp() {
     git add -A;git commit -m "$1";git push origin master
@@ -44,3 +44,5 @@ acp() {
 
 PERL_MB_OPT="--install_base \"/Users/keithy/perl5\""; export PERL_MB_OPT;
 PERL_MM_OPT="INSTALL_BASE=/Users/keithy/perl5"; export PERL_MM_OPT;
+
+[[ -s "/Users/keithy/.gvm/scripts/gvm" ]] && source "/Users/keithy/.gvm/scripts/gvm"

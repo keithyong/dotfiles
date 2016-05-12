@@ -5,7 +5,11 @@ set background=light
 " Disable h and l
 " nnoremap l <nop>
 " nnoremap h <nop>
-"
+
+" Disable j and k
+" nnoremap j <nop>
+" nnoremap k <nop>
+
 
 " ============================================================================
 " PLUGINS {{{
@@ -36,6 +40,7 @@ Plugin 'kristijanhusak/vim-multiple-cursors'
 Plugin 'scrooloose/syntastic'
 Plugin 'godlygeek/tabular'
 Plugin 'gregsexton/MatchTag'
+Plugin 'docunext/closetag.vim'
 
 " ctrlp
 Plugin 'kien/ctrlp.vim'
@@ -56,7 +61,6 @@ Plugin 'lervag/vimtex'
 " Neocomplete
 Plugin 'MarcWeber/vim-addon-mw-utils'
 Plugin 'tomtom/tlib_vim'
-Plugin 'Shougo/neocomplete'
 
 " UltiSnips
 Plugin 'SirVer/ultisnips'
@@ -69,7 +73,6 @@ Plugin 'vim-ruby/vim-ruby'
 
 " ReactJS
 Plugin 'mxw/vim-jsx'
-
 
 call vundle#end()
 filetype plugin indent on
@@ -110,6 +113,10 @@ autocmd Filetype ruby setlocal ts=2 sts=2 sw=2
 
 set encoding=utf-8
 set guifont=Liberation\ Mono\ for\ Powerline:h14
+
+" zsh completion menu on ex
+set wildmenu
+set wildmode=full
 
 " }}}
 " ============================================================================
@@ -213,31 +220,6 @@ let g:syntastic_mode_map = { 'mode': 'passive' }
 
 " }}}
 " ============================================================================
-" NEOCOMPLETEME {{{
-" ============================================================================
-" let g:neocomplete#enable_at_startup = 1
-let g:neocomplete#enable_fuzzy_completion = 0
-let g:neocomplete#enable_smart_case = 1
-
-" }}}
-" ============================================================================
-" VIM-MULTIPLE-CURSORS {{{
-" ============================================================================
-" Make plugin neocompleteme friendly
- function! Multiple_cursors_before()
-    exe 'NeoCompleteLock'
-    echo 'Disabled autocomplete'
-endfunction
-
-function! Multiple_cursors_after()
-    exe 'NeoCompleteUnlock'
-    echo 'Enabled autocomplete'
-endfunction
-
-" <TAB>: completetion.
-inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
-
-" }}}
 " ============================================================================
 " AIRLINE {{{
 " ============================================================================
@@ -309,11 +291,15 @@ inoremap <Esc> <Esc>:w<CR>
 
 " }}}
 " ============================================================================
-" VIMTEX {{{
+" ============================================================================
+" COMMENTARY {{{
 " ============================================================================
 " Neocomplete integration
-if !exists('g:neocomplete#sources#omni#input_patterns')
-    let g:neocomplete#sources#omni#input_patterns = {}
-endif
-    let g:neocomplete#sources#omni#input_patterns.tex =
-    \ '\v\\\a*(ref|cite)\a*([^]]*\])?\{([^}]*,)*[^}]*'
+autocmd FileType html setlocal commentstring=<!--\ %s\ -->
+" }}}
+" ============================================================================
+" closetag {{{
+" ============================================================================
+" Source closetag script
+au Filetype html,xml,xsl source ~/.vim/bundle/closetag.vim/plugin/closetag.vim
+" }}}
